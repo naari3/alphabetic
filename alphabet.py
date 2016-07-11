@@ -161,7 +161,7 @@ def train_dcgan_labeled(gen, dis, o_gen, o_dis, epoch0=0):
 
         if epoch % output_interval == 0:
             plt.rcParams['figure.figsize'] = (16.0, 16.0)
-            plt.clf()
+            # plt.clf()
             z = zvis
             z[50:, :] = (xp.random.uniform(-1, 1, (50, nz), dtype=np.float32))
             z = Variable(z)
@@ -170,9 +170,9 @@ def train_dcgan_labeled(gen, dis, o_gen, o_dis, epoch0=0):
             for i_ in range(100):
                 # tmp = ((np.vectorize(clip_img)(x[i_, :, :, :]) + 1) / 2).transpose(1, 2, 0)
                 tmp = np.vectorize(clip_img)(x[i_, 0, :, :])
-                plt.subplot(10, 10, i_ + 1)
+                plt.subplot(10, 10, i_ + 1) 
                 plt.gray()
-                plt.imshow(tmp)
+                # plt.imshow(tmp)
                 plt.axis('off')
             plt.savefig('%s/vis_%d_%d.png' % (out_image_dir, epoch, 0))
             serializers.save_hdf5("%s/dcgan_model_dis.h5" % out_model_dir, dis)
