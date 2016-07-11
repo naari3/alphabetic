@@ -8,6 +8,7 @@ import os
 from StringIO import StringIO
 import math
 import pylab
+import matplotlib.pyplot as plt
 
 import chainer
 from chainer import computational_graph
@@ -159,8 +160,8 @@ def train_dcgan_labeled(gen, dis, o_gen, o_dis, epoch0=0):
             # sum_l_dis += L_dis.data.get() # dis出力の誤差（交差エントロピー）を加算
 
         if epoch % output_interval == 0:
-            pylab.rcParams['figure.figsize'] = (16.0, 16.0)
-            pylab.clf()
+            plt.rcParams['figure.figsize'] = (16.0, 16.0)
+            plt.clf()
             z = zvis
             z[50:, :] = (xp.random.uniform(-1, 1, (50, nz), dtype=np.float32))
             z = Variable(z)
@@ -169,11 +170,11 @@ def train_dcgan_labeled(gen, dis, o_gen, o_dis, epoch0=0):
             for i_ in range(100):
                 # tmp = ((np.vectorize(clip_img)(x[i_, :, :, :]) + 1) / 2).transpose(1, 2, 0)
                 tmp = np.vectorize(clip_img)(x[i_, 0, :, :])
-                pylab.subplot(10, 10, i_ + 1)
-                pylab.gray()
-                pylab.imshow(tmp)
-                pylab.axis('off')
-            pylab.savefig('%s/vis_%d_%d.png' % (out_image_dir, epoch, 0))
+                plt.subplot(10, 10, i_ + 1)
+                plt.gray()
+                plt.imshow(tmp)
+                plt.axis('off')
+            plt.savefig('%s/vis_%d_%d.png' % (out_image_dir, epoch, 0))
             serializers.save_hdf5("%s/dcgan_model_dis.h5" % out_model_dir, dis)
             serializers.save_hdf5("%s/dcgan_model_gen.h5" % out_model_dir, gen)
             serializers.save_hdf5("%s/dcgan_state_dis.h5" % out_model_dir, o_dis)
